@@ -14,6 +14,7 @@ bindsym $mod+b exec brave
 
 #exec_always xrandr --output DVI-I-1 --mode 1920x1080 --rate 144
 
+bindsym $mod+Shift+Return exec cd "$(xcwd)" && exec termite -e ranger 
 
 bindsym $mod+Shift+F1 exec shutdown now
 
