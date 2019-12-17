@@ -1,7 +1,7 @@
-vnoremap <C-y> "+y
+map <C-y> "+y
 map <C-p> "+p
-nmap <C-N><C-N> :set invnumber<CR>
 
+set invnumber
 inoremap <A-z> <Esc>
 
 let mapleader =","
@@ -14,14 +14,43 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-
 nnoremap <silent><C-j> o<Esc>
 nnoremap <silent><C-k> o<Esc>
 
 set completeopt-=preview
 
 
-autocmd FileType c inoremap ,m int<Space>main(){<Enter><Enter>}<Esc>k
+colorscheme paradoxcolors 
+syntax on
+
+
+"c 
+autocmd FileType c inoremap ,m int<Space>main(int argc,char *argv[]){<Enter><Enter>}<Esc>k
+autocmd FileType c inoremap ,i if(){<Enter><Enter>}<Esc>kklla
+autocmd FileType c inoremap ,f for(){<Enter><Enter>}<Esc>kkllla;;;<Esc>hhhi
+
+autocmd FileType c nnoremap <C-_> i//<Esc>
+
+
+nnoremap <leader>. :CtrlPTag<cr>
+
+set autoindent
+set cindent 
+
+
+"cpp 
+autocmd FileType cpp inoremap ,c class class_name{<Enter><Enter>}<Esc>ki
+autocmd FileType cpp inoremap ,m int<Space>main(int argc,char *argv[]){<Enter><Enter>}<Esc>k
+autocmd FileType cpp inoremap ,i if(){<Enter><Enter>}<Esc>kklla
+autocmd FileType cpp inoremap ,f for(){<Enter><Enter>}<Esc>kkllla;;;<Esc>hhhi
+
+autocmd FileType cpp nnoremap <C-_> i//<Esc>
+
+
+"scala:w
+
+"linting 
+
 "html
 autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i
 autocmd FileType html inoremap ,it <em></em><Space><++><Esc>FeT>i
@@ -45,11 +74,34 @@ autocmd FileType html inoremap ,yl <font color="yellow"></font><Esc>F>a
 autocmd FileType html inoremap ,dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit
 autocmd FileType html inoremap ,dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
 
+"MARKDOWN
+autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
+autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
+autocmd Filetype markdown,rmd inoremap ,b ****<++><Esc>F*hi
+autocmd Filetype markdown,rmd inoremap ,s ~~~~<++><Esc>F~hi
+autocmd Filetype markdown,rmd inoremap ,e **<++><Esc>F*i
+autocmd Filetype markdown,rmd inoremap ,h ====<Space><++><Esc>F=hi
+autocmd Filetype markdown,rmd inoremap ,i ![](<++>)<++><Esc>F[a
+autocmd Filetype markdown,rmd inoremap ,a [](<++>)<++><Esc>F[a
+autocmd Filetype markdown,rmd inoremap ,1 #<Space><Enter><++><Esc>kA
+autocmd Filetype markdown,rmd inoremap ,2 ##<Space><Enter><++><Esc>kA
+autocmd Filetype markdown,rmd inoremap ,3 ###<Space><Enter><++><Esc>kA
+autocmd Filetype markdown,rmd inoremap ,l --------<Enter>
+autocmd Filetype rmd inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
+autocmd Filetype rmd inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
+autocmd Filetype rmd inoremap ,c ```<cr>```<cr><cr><esc>2kO
+
+map <leader>c :w! \| !compiler <c-r>%<CR>
+
 ""auto complete
-	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+""make commands
+autocmd FileType c nnoremap <C-M> :w<CR> :make -C ..<Enter>  
+autocmd FileType c nnoremap <C-R> :w<CR> :exec'!gcc % && ./a.out'<Enter>
+autocmd FileType cpp nnoremap <C-R> :w<CR> :exec'!g++ % && ./a.out'<Enter>
 
-
+autocmd FileType python nnoremap <C-M> :w<CR> :exec '!python' shellescape(@%, 1)<cr>
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -57,11 +109,35 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+map <C-n> :NERDTreeToggle<CR>
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree' 
 
+Plug 'deoplete-plugins/deoplete-jedi'
+
+Plug 'mjm2000/ps.vim' 
+
+Plug 'rust-lang/rust.vim'
+
+Plug  'hdima/python-syntax'
+
+Plug 'AndrewRadev/id3.vim' 
+
+Plug 'idanarye/vim-vebugger'
+
+Plug 'justinmk/vim-syntax-extra'
+
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+
+Plug 'davidhalter/jedi-vim'
+
+Plug 'kien/ctrlp.vim'
+
 Plug 'vimwiki/vimwiki' 
+
+Plug 'tpope/vim-fugitive'
 
 Plug 'octol/vim-cpp-enhanced-highlight'
 
@@ -72,6 +148,12 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
 Plug 'vim-scripts/c.vim'
+
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
+Plug 'derekwyatt/vim-scala'
+
+Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'mboughaba/i3config.vim'
 
@@ -98,4 +180,9 @@ set clipboard=unnamed
 
 let g:deoplete#enable_at_startup = 1
 
-call neomake#configure#automake('nrwi', 500)
+
+let g:vim_markdown_folding_disabled = 1
+
+call deoplete#custom#option('num_processes', 1)
+
+call neomake#configure#automake('nw', 500)
