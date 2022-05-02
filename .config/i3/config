@@ -6,15 +6,17 @@
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
-exec_always --no-startup-id feh --bg-scale ~/soviet_union.jpg
 
-bindsym $mod+b exec brave
+set $browser firefox
+set $term alacritty
+
+bindsym $mod+b exec $browser 
 
 #exec_always xrandr --output DP-0 --left-of DVI-I-1 --auto
 
 #exec_always xrandr --output DVI-I-1 --mode 1920x1080 --rate 144
 
-bindsym $mod+Shift+Return exec cd "$(xcwd)" && exec termite -e ranger 
+bindsym $mod+Shift+Return exec cd "$(xcwd)" && $term 
 
 bindsym $mod+Shift+F1 exec shutdown now
 
@@ -26,19 +28,13 @@ bindsym $mod+F2 exec amixer set 'Master' 10%-
 
 bindsym $mod+F3 exec amixer set 'Master' 10%+
 
-bindsym $mod+x exec steam
 
-bindsym $mod+c exec discord
 
-bindsym $mod+m exec lutris
-
-bindsym $mod+t exec xfce4-taskmanager 
 
 exec_always i3 --shmlog-size=26214400
 
-exec --no-startup-id xautolock -time 10 -locker 'i3lock -d -c 000000'
+#exec --no-startup-id xautolock -time 10 -locker 'i3lock -d -c 000000'
 
-bindsym $mod+z exec xfce4-screenshooter
 
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
@@ -67,7 +63,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec termite
+bindsym $mod+Return exec $term
 
 # kill focused window
 bindsym $mod+Shift+q kill

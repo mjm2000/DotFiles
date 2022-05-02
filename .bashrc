@@ -24,9 +24,6 @@ alias sv="sudo nvim"
 
 alias p="sudo pacman"
 
-alias n="nnn"
-
-alias sn="sudo nnn"
 
 alias eb="v ~/.bashrc"
 
@@ -39,3 +36,5 @@ alias rb="source ~/.bashrc"
 alias config="cd ~/.config"
 
 alias l="ls -larts"
+
+alias r="ranger"
